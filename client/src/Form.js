@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-export default class Form extends Component {
+export default class Form extends React.Component {
 
     state={
         name:'',
@@ -45,7 +45,7 @@ export default class Form extends Component {
         message:this.state.message
     }
 
-    axios.post('/api/form',data)
+    axios.post('/api/form', data)
     .then(res=>{
         this.setState({
             sent:true,
@@ -68,12 +68,12 @@ resetForm=()=>{
         message:''
     })
 
-    setTimeout(()=>{
-        this.setState({
-            sent:false,
-        })
+    // setTimeout(()=>{
+    //     this.setState({
+    //         sent:false,
+    //     })
         
-    },3000 )
+    // }, 3000 )
 }
 
 
@@ -114,12 +114,14 @@ resetForm=()=>{
                     </div>
                     <div className="textarea singleItem" >
                         <label htmlFor="message">Message</label>
-                        <div className="msg" contentEditable="true" name="message" id=""
-                        cols="30" rows="5" 
-                        placeholder="your message ...."
+                        <textarea className="msg" name="message" id=""
+                        cols="30" rows="5" placeholder="your message ...."
                         value={this.state.message}
                         onChange={this.handleMessage}
-                        />
+                        ></textarea>
+                       
+                    
+                        
                         
                     </div>
                     <div className={this.state.sent ?'msg msgAppear':'msg'}>Message has been sent!</div>

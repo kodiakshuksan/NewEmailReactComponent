@@ -1,31 +1,46 @@
 const express = require('express');
- bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+const env = require('dotenv');
+const PORT = process.env.PORT||3000;
 
 const app = express()
 
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(cors());
 
-app.get('/', () => {
+app.get('/', (req, res) => {
   res.send('Welcome to my Form')
 })
 
 app.post('/api/form', (req,res)=>{
     let data = req.body
     let smtpTransport = nodemailer.createTransport({
-        service: 'Gmail' ,
+        service: 'Gmail',
         port:456,
         auth:{
             user:'wildbirdiedog@gmail.com',
-            pass:'Moon444!!!'
+            pass: 'env'
         }
     });
+
+    // app.get('/', function(req, res, next) {
+    //     // Handle the get for this route
+    //   });
+      
+    //   app.post('/', function(req, res, next) {
+    //    // Handle the post for this route
+    //   });
 
 let mailOptions={
     from:data.email,
@@ -62,7 +77,6 @@ smtpTransport.close();
 
 })
 
-const PORT = process.env.PORT||3001
 
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`)
