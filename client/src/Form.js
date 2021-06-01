@@ -51,7 +51,8 @@ export default class Form extends Component {
             sent:true,
         },this.resetForm())
 
-    }).catch(()=>{
+    })
+    .catch(()=>{
         console.log("message not sent!");
     })
 
@@ -80,7 +81,7 @@ resetForm=()=>{
     render() {
         return (
             <div className="container">
-                <form>
+                <form onSubmit={this.formSubmit}>
                     <div className="singleItem">
                         <label htmlFor="name">Name</label>
                         <input type="text" 
@@ -121,7 +122,7 @@ resetForm=()=>{
                         />
                         
                     </div>
-                    <div className="msg">Message has been sent!</div>
+                    <div className={this.state.sent ?'msg msgAppear':'msg'}>Message has been sent!</div>
                     <div className="btn">
                         <button type="submit">Submit</button>
                     </div>
